@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Sep 22 13:12:49 CEST 2008
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=true
+jarname=synesketch_empathybox.jar
+manifest.mergeall=true
+manifest.mainclass=synesketch.app.Main
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
