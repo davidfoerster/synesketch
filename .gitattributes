@@ -1,0 +1,5 @@
+*       text=auto
+*.txt   text
+*.log   text
+*.java  text diff=java
+*.xml   text diff=html
