@@ -35,6 +35,15 @@ public class Empathybox
 
 	private final int dim = 500;
 
+  private final String artType;
+
+	public Empathybox(String artType) {
+		this.artType = artType;
+	}
+
+	public Empathybox() {
+		this("Hooloovoo");
+	}
 
 	private JFrame getJFrame()
 	{
@@ -69,12 +78,7 @@ public class Empathybox
 	{
 		if (appletPanel == null) {
 			try {
-				appletPanel =
-				    new EmpathyPanel(dim, "Synemania",
-				        "synesketch.emotion.SynesthetiatorEmotion");
-				/*appletPanel =
-				    new EmpathyPanel(dim, "Hooloovoo",
-				        "synesketch.emotion.SynesthetiatorEmotion");*/
+				appletPanel = new EmpathyPanel(dim, artType, "synesketch.emotion.SynesthetiatorEmotion");
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
@@ -120,13 +124,14 @@ public class Empathybox
 	}
 
 
-	public static void main(String[] args)
+	public static void main( final String[] args)
 	{
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run()
 			{
-				Empathybox application = new Empathybox();
+				Empathybox application =
+					(args.length > 0) ? new Empathybox(args[0]) : new Empathybox();
 				application.getJFrame().setVisible(true);
 			}
 		});
