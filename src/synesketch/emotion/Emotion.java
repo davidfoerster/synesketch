@@ -31,19 +31,19 @@ package synesketch.emotion;
 
 public class Emotion implements Comparable<Emotion> {
 
-	public static int NEUTRAL = -1;
+	public static final int NEUTRAL = -1;
 
-	public static int HAPPINESS = 0;
+	public static final int HAPPINESS = 0;
 
-	public static int SADNESS = 1;
+	public static final int SADNESS = 1;
 
-	public static int FEAR = 2;
+	public static final int FEAR = 2;
 
-	public static int ANGER = 3;
+	public static final int ANGER = 3;
 
-	public static int DISGUST = 4;
+	public static final int DISGUST = 4;
 
-	public static int SURPRISE = 5;
+	public static final int SURPRISE = 5;
 
 	private double weight;
 
