@@ -122,6 +122,16 @@ public class Hooloovoo extends PApplet
 			currentPalette = palette.getSurpriseColors();
 			delay = 200;
 		}
+
+		//printCurrentPalette();
+	}
+
+
+	public void printCurrentPalette () {
+		colorMode(RGB, 255);
+		for (int color: currentPalette) {
+			System.out.printf("(%d, %d, %d)\n", (int) red(color), (int) green(color), (int) blue(color));
+		}
 	}
 
 
