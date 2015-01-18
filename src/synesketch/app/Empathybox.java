@@ -88,7 +88,7 @@ public class Empathybox
 		if (jScrollPane == null) {
 			jScrollPane = new JScrollPane();
 			jScrollPane.setBorder(BorderFactory
-					.createBevelBorder(BevelBorder.LOWERED));
+			    .createBevelBorder(BevelBorder.LOWERED));
 			jScrollPane.setVisible(true);
 			jScrollPane.setViewportView(getJTextArea());
 		}
