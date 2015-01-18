@@ -14,7 +14,8 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="Processing Core" level="project" />
+    <orderEntry type="library" exported="" name="jogl2" level="project" />
+    <orderEntry type="library" exported="" name="gluegen2-rt" level="project" />
+    <orderEntry type="library" exported="" name="Processing 3.0a5 core" level="project" />
   </component>
 </module>
-
