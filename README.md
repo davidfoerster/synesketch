@@ -1,11 +1,16 @@
 Synesketch
 ==========
 
-Synesketch relies on [Processing] v1.x core library. Setup instructions:
+Synesketch works well with Processing 1.5 and [mostly][issue-2] with Processing 2.2 and 3.0a core libraries. Setup instructions:
 
- * For convenience the project class path is pre-configured to find [`core.jar` (download)][core.jar] in `lib/processing`.
+ 1. Get a copy [Processing] or at least the `core.jar` library, if you didn't already.
 
- * Alternatively you can configure the class path to find it in your local installation of [Processing] 1.x.
+ 2. Set the Java classpath to include it:
 
-[Processing]: http://processing.org/
-[core.jar]: https://www2.informatik.hu-berlin.de/~foerstda/synesketch/lib/processing/core.jar
+     * In IntelliJ Idea go to *File > Project Structure > Libraries* and point it to the path of your copy of the Processing core library.
+     * Do the equivalent in Eclipse or your favourite IDE.
+     * Set the `CLASSPATH` environment variable to include the path to your copy of the Processing core library.
+
+
+[Processing]: http://processing.org/download/
+[issue-2]: https://github.com/davidfoerster/synesketch/issues/2
