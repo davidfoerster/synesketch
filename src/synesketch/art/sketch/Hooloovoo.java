@@ -32,7 +32,7 @@ public class Hooloovoo extends PApplet
 
 	SynesketchPalette palette = new SynesketchPalette("standard");
 
-	int[] currentPalette = new int[38];
+	int[] currentPalette;
 
 	int[] bwPalette = { -10461088, -7303024, -6579301, -10987432, -7368817,
 	    -9868951,
@@ -42,10 +42,11 @@ public class Hooloovoo extends PApplet
 	    -5921371, -10987432, -8092540, -7039852, -7697782, -5789785, -8750470,
 	    -10197916, -6381922, -8750470, -5855578 };
 
+  int[] emotionTypeDelays = { 400, 1500, 300, 800, 800, 200 };
+
 	int dim = 400;
 	int size = 40;
 	int delay = 1500;
-	int trans = 50;
 	float sat = 1.0f;
 
 
@@ -96,31 +97,16 @@ public class Hooloovoo extends PApplet
 		EmotionalState currentState = (EmotionalState) state;
 		System.out.println(currentState);
 		Emotion emo = currentState.getStrongestEmotion();
-		int currentEmotion = emo.getType();
 		setSize(emo.getWeight());
-		sat = (float) Math.sqrt(emo.getWeight());
-		if (currentEmotion == Emotion.NEUTRAL) {
+
+		if (emo.getType() != Emotion.NEUTRAL) {
+			currentPalette = palette.getColors(emo);
+			delay = emotionTypeDelays[emo.getType()];
+			sat = (float) Math.sqrt(emo.getWeight());
+		} else {
 			currentPalette = bwPalette;
 			delay = 1500;
 			sat = 0.5f;
-		} else if (currentEmotion == Emotion.HAPPINESS) {
-			currentPalette = palette.getHappinessColors();
-			delay = 400;
-		} else if (currentEmotion == Emotion.SADNESS) {
-			currentPalette = palette.getSadnessColors();
-			delay = 1500;
-		} else if (currentEmotion == Emotion.ANGER) {
-			currentPalette = palette.getAngerColors();
-			delay = 300;
-		} else if (currentEmotion == Emotion.FEAR) {
-			currentPalette = palette.getFearColors();
-			delay = 800;
-		} else if (currentEmotion == Emotion.DISGUST) {
-			currentPalette = palette.getDisgustColors();
-			delay = 800;
-		} else if (currentEmotion == Emotion.SURPRISE) {
-			currentPalette = palette.getSurpriseColors();
-			delay = 200;
 		}
 
 		//printCurrentPalette();
