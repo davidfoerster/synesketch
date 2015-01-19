@@ -20,6 +20,7 @@ package synesketch.art.util;
 
 import java.util.Random;
 
+import synesketch.emotion.Emotion;
 import synesketch.util.PropertiesManager;
 
 /**
@@ -50,29 +51,46 @@ public class SynesketchPalette {
 
 	private int[] surpriseColors;
 
+	private int[][] allColors;
+
 	private Random randomiser;
 
 	/**
 	 * Class contructor which sets six palettes -- one for each emotion type,
 	 * happiness, sadness, anger, fear, disgust, and surprise -- by taking data
 	 * from a XML file defined by palette's name.
-	 * 
+	 *
 	 * @param paletteName
 	 *            {@link String} name of the six-part palette -- XML file with
 	 *            the color codes for each emotion type
 	 */
 	public SynesketchPalette(String paletteName) {
 		PropertiesManager pm = new PropertiesManager("/data/palette/"
-				+ paletteName.toLowerCase() + ".xml");
+			+ paletteName.toLowerCase() + ".xml");
 		happinessColors = pm.getIntArrayProperty("happiness.palette");
 		sadnessColors = pm.getIntArrayProperty("sadness.palette");
 		angerColors = pm.getIntArrayProperty("anger.palette");
 		fearColors = pm.getIntArrayProperty("fear.palette");
 		disgustColors = pm.getIntArrayProperty("disgust.palette");
 		surpriseColors = pm.getIntArrayProperty("surprise.palette");
+
+		allColors = new int[][] {
+			fearColors,
+			angerColors,
+			disgustColors,
+			happinessColors,
+			sadnessColors,
+			surpriseColors
+		};
+
 		randomiser = new Random();
 	}
-	
+
+	public int[] getColors(Emotion e) {
+		int type = e.getType();
+		return (type >= 0 && type < allColors.length) ? allColors[type] : null;
+	}
+
 	/**
 	 * Getter for the palette for the emotion of anger.
 	 * 
