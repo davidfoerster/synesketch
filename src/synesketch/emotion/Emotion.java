@@ -45,6 +45,10 @@ public class Emotion implements Comparable<Emotion> {
 
 	public static final int SURPRISE = 5;
 
+	private static final String[] NAMES = {
+		"neutral", "happiness", "sadness", "fear", "anger", "disgust", "surprise"
+	};
+
 	private double weight;
 
 	private int type;
@@ -90,6 +94,10 @@ public class Emotion implements Comparable<Emotion> {
 		return type;
 	}
 
+	public String getTypeName() {
+		return NAMES[type + 1];
+	}
+
 	/**
 	 * Setter for the emotion type
 	 * 
@@ -125,7 +133,7 @@ public class Emotion implements Comparable<Emotion> {
 	 * @return a string representation of the object
 	 */
 	public String toString() {
-		return "Type number: " + type + ", weight: " + weight;
+		return "Type: " + getTypeName() + ", weight: " + weight;
 	}
 
 }
