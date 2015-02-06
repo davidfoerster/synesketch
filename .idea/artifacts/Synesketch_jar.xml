@@ -2,6 +2,7 @@
   <artifact type="jar" name="Synesketch:jar">
     <output-path>$PROJECT_DIR$/bin/artifacts/Synesketch_jar</output-path>
     <root id="archive" name="Synesketch.jar">
+      <element id="library" level="application" name="Processing 3.0a5 core" />
       <element id="module-output" name="Synesketch" />
     </root>
   </artifact>
