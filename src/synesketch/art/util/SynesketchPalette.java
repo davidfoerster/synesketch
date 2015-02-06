@@ -98,6 +98,11 @@ public class SynesketchPalette {
 		return (type >= 0 && type < allColors.length) ? allColors[type] : null;
 	}
 
+	public int getRandomColor(Emotion e) {
+		int[] palette = getColors(e);
+		return palette[randomiser.nextInt(palette.length)];
+	}
+
 	/**
 	 * Getter for the palette for the emotion of anger.
 	 * 
