@@ -53,7 +53,16 @@ public class SynesketchPalette {
 
 	private int[][] allColors;
 
-	private Random randomiser;
+	private final Random randomiser = new Random();
+
+	public static final int[] neutralColors = {
+		0x606060, 0x909090, 0x9b9b9b, 0x585858, 0x8f8f8f, 0x696969, 0xa5a5a5,
+		0x5f5f5f, 0x7f7f7f, 0x828282, 0x9e9e9e, 0x828282, 0x797979, 0x5c5c5c,
+		0x4e4e4e, 0x686868, 0xa9a9a9, 0x777777, 0xadadad, 0x9b9b9b, 0x696969,
+		0x979797, 0x575757, 0x727272, 0x9a9a9a, 0x797979, 0x999999, 0xa5a5a5,
+		0x585858, 0x848484, 0x949494, 0x8a8a8a, 0xa7a7a7, 0x7a7a7a, 0x646464,
+		0x9e9e9e, 0x7a7a7a, 0xa6a6a6
+	};
 
 	/**
 	 * Class contructor which sets six palettes -- one for each emotion type,
@@ -74,20 +83,18 @@ public class SynesketchPalette {
 		disgustColors = pm.getIntArrayProperty("disgust.palette");
 		surpriseColors = pm.getIntArrayProperty("surprise.palette");
 
-		allColors = new int[][] {
-			fearColors,
-			angerColors,
-			disgustColors,
-			happinessColors,
-			sadnessColors,
-			surpriseColors
-		};
-
-		randomiser = new Random();
+		allColors = new int[7][];
+		allColors[Emotion.NEUTRAL + 1] = neutralColors;
+		allColors[Emotion.HAPPINESS + 1] = happinessColors;
+		allColors[Emotion.SADNESS + 1] = sadnessColors;
+		allColors[Emotion.ANGER + 1] = angerColors;
+		allColors[Emotion.FEAR + 1] = fearColors;
+		allColors[Emotion.DISGUST + 1] = disgustColors;
+		allColors[Emotion.SURPRISE + 1] = surpriseColors;
 	}
 
 	public int[] getColors(Emotion e) {
-		int type = e.getType();
+		int type = e.getType() + 1;
 		return (type >= 0 && type < allColors.length) ? allColors[type] : null;
 	}
 
