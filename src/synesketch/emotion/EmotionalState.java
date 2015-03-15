@@ -121,7 +121,7 @@ public class EmotionalState extends SynesketchState {
 	 *         weight
 	 */
 	public List<Emotion> getFirstStrongestEmotions(int stop) {
-		List<Emotion> value = new ArrayList<Emotion>();
+		List<Emotion> value = new ArrayList<Emotion>(Math.min(emotions.size(), stop));
 		for (Emotion e : emotions) {
 			if (stop <= 0) {
 				break;
@@ -138,13 +138,7 @@ public class EmotionalState extends SynesketchState {
 	 * @return {@link Emotion} of happiness
 	 */
 	public Emotion getHappiness() {
-		Emotion value = new Emotion(0.0, Emotion.HAPPINESS);
-		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.HAPPINESS) {
-				value = e;
-			}
-		}
-		return value;
+		return getEmotion(Emotion.HAPPINESS);
 	}
 
 	/**
@@ -162,13 +156,7 @@ public class EmotionalState extends SynesketchState {
 	 * @return {@link Emotion} of sadness
 	 */
 	public Emotion getSadness() {
-		Emotion value = new Emotion(0.0, Emotion.SADNESS);
-		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.SADNESS) {
-				value = e;
-			}
-		}
-		return value;
+		return getEmotion(Emotion.SADNESS);
 	}
 
 	/**
@@ -186,13 +174,7 @@ public class EmotionalState extends SynesketchState {
 	 * @return {@link Emotion} of fear
 	 */
 	public Emotion getFear() {
-		Emotion value = new Emotion(0.0, Emotion.FEAR);
-		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.FEAR) {
-				value = e;
-			}
-		}
-		return value;
+		return getEmotion(Emotion.FEAR);
 	}
 
 	/**
@@ -210,13 +192,7 @@ public class EmotionalState extends SynesketchState {
 	 * @return {@link Emotion} of anger
 	 */
 	public Emotion getAnger() {
-		Emotion value = new Emotion(0.0, Emotion.ANGER);
-		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.ANGER) {
-				value = e;
-			}
-		}
-		return value;
+		return getEmotion(Emotion.ANGER);
 	}
 
 	/**
@@ -234,13 +210,7 @@ public class EmotionalState extends SynesketchState {
 	 * @return {@link Emotion} of disgust
 	 */
 	public Emotion getDisgust() {
-		Emotion value = new Emotion(0.0, Emotion.DISGUST);
-		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.DISGUST) {
-				value = e;
-			}
-		}
-		return value;
+		return getEmotion(Emotion.DISGUST);
 	}
 
 	/**
@@ -258,13 +228,7 @@ public class EmotionalState extends SynesketchState {
 	 * @return {@link Emotion} of surprise
 	 */
 	public Emotion getSurprise() {
-		Emotion value = new Emotion(0.0, Emotion.SURPRISE);
-		for (Emotion e : emotions) {
-			if (e.getType() == Emotion.SURPRISE) {
-				value = e;
-			}
-		}
-		return value;
+		return getEmotion(Emotion.SURPRISE);
 	}
 
 	/**
@@ -311,6 +275,20 @@ public class EmotionalState extends SynesketchState {
 	 */
 	public double getGeneralWeight() {
 		return generalWeight;
+	}
+
+	public Emotion getEmotion(int type)
+	{
+		for (Emotion e: emotions) {
+			if (e.getType() == type)
+				return e;
+		}
+		return new Emotion(0, type);
+	}
+
+	public List<AffectWord> getAffectWords()
+	{
+		return affectWords;
 	}
 
 	/**

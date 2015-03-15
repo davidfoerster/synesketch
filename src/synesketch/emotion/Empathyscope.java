@@ -58,7 +58,7 @@ public class Empathyscope {
 	}
 
 	/**
-	 * Textual affect sensing behavior, the main NLP alghoritm which uses
+	 * Textual affect sensing behavior, the main NLP algorithm which uses
 	 * Synesketch Lexicon and several heuristic rules.
 	 * 
 	 * @param text
@@ -117,7 +117,7 @@ public class Empathyscope {
 									.computeCapsLockQoef(word);
 
 							// (5) previous word is a intensity modifier (e.g.
-							// "extremly") => more intensive emotive weights
+							// "extremely") => more intensive emotive weights
 							double modifierCoef = HeuristicsUtility
 									.computeModifier(previousWord);
 
