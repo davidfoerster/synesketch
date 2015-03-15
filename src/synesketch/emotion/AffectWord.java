@@ -18,6 +18,9 @@
  */
 package synesketch.emotion;
 
+import java.util.Comparator;
+
+
 /**
  * Represents one unit from the Synesketch Lexicon: a word associated with
  * emotional meaning, and it's emotional weights and valence.
@@ -426,4 +429,24 @@ public class AffectWord {
 				+ disgustWeight + surpriseWeight;
 	}
 
+
+	public static class WeightSumComparator implements Comparator<AffectWord>
+	{
+		private static WeightSumComparator instance = null;
+
+		public static WeightSumComparator getInstance()
+		{
+			if (instance == null)
+				instance = new WeightSumComparator();
+			return instance;
+		}
+
+		private WeightSumComparator() { }
+
+		@Override
+		public int compare( AffectWord o1, AffectWord o2 )
+		{
+			return Double.compare(o1.getWeightSum(), o2.getWeightSum());
+		}
+	}
 }
