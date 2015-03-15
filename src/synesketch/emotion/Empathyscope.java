@@ -192,7 +192,7 @@ public class Empathyscope {
 		if (emotions.isEmpty())
 			emotions.add(new Emotion((0.2 + generalWeight) / 1.2,
 					Emotion.NEUTRAL));
-		return new EmotionalState(text, emotions, generalWeight, generalValence);
+		return new EmotionalState(text, emotions, affectWords, generalWeight, generalValence);
 	}
 
 }

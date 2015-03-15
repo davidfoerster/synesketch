@@ -18,10 +18,7 @@
  */
 package synesketch.emotion;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import processing.core.PApplet;
 
@@ -59,6 +56,8 @@ public class EmotionalState extends SynesketchState {
 
 	private SortedSet<Emotion> emotions;
 
+	private List<AffectWord> affectWords;
+
 	/**
 	 * Empty class constructor
 	 */
@@ -93,11 +92,13 @@ public class EmotionalState extends SynesketchState {
 	 *            int representing the emotinal valence
 	 */
 	public EmotionalState(String text, SortedSet<Emotion> emotions,
-			double generalWeight, int valence) {
+		List<AffectWord> affectWords, double generalWeight, int valence)
+	{
 		super(text);
 		this.generalWeight = generalWeight;
 		this.valence = valence;
 		this.emotions = emotions;
+		this.affectWords = affectWords;
 	}
 
 	/**
