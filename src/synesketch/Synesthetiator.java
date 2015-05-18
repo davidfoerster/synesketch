@@ -19,7 +19,10 @@
 
 package synesketch;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
 import processing.core.PApplet;
 
 /**
@@ -37,11 +40,38 @@ import processing.core.PApplet;
  * @author Uros Krcadinac email: uros@krcadinac.com
  * @version 1.0
  */
-public abstract class Synesthetiator {
+public abstract class Synesthetiator
+{
 
-	private PApplet parent;
+	private UpdateHandler updateHandler;
 
-	private Method updateMethod;
+  private static class ReflectiveUpdateHandler implements UpdateHandler
+  {
+    private final Object handlerInstance;
+
+    private final Method handlerMethod;
+
+    public ReflectiveUpdateHandler( Object handler )
+      throws NoSuchMethodException, IllegalAccessException
+    {
+      this.handlerInstance = handler;
+      handlerMethod = handler.getClass().getMethod("synesketchUpdate", SynesketchState.class);
+      int mod = handlerMethod.getModifiers();
+      if (!Modifier.isPublic(mod) || Modifier.isAbstract(mod)) {
+        throw new IllegalAccessException(
+          handler.getClass().getName() + '#' + handlerMethod.getName() +
+            '(' + handlerMethod.getParameterTypes()[0].getName() + ')' +
+            " must be public and non-abstract");
+      }
+    }
+
+    @Override
+    public void synesketchUpdate( SynesketchState state )
+      throws InvocationTargetException, IllegalAccessException
+    {
+      handlerMethod.invoke(handlerInstance, state);
+    }
+  }
 
 	/**
 	 * Class constructor that sets parent Processing applet (PApplet). Parent
@@ -52,10 +82,14 @@ public abstract class Synesthetiator {
 	 *            PApllet, a parent Processing applet
 	 * @throws Exception
 	 */
-	public Synesthetiator(PApplet parent) throws Exception {
-		this.parent = parent;
-		updateMethod = parent.getClass().getMethod("synesketchUpdate",
-				new Class[] { SynesketchState.class });
+	public Synesthetiator(PApplet parent)
+    throws NoSuchMethodException, IllegalAccessException
+  {
+		this((parent != null) ? new ReflectiveUpdateHandler(parent) : null);
+	}
+
+	public Synesthetiator(UpdateHandler handler) {
+		this.updateHandler = handler;
 	}
 
 	/**
@@ -67,12 +101,12 @@ public abstract class Synesthetiator {
 	 *            synestheticaly interpreted from the text
 	 */
 	public void notifyPApplet(SynesketchState state) {
-		if (updateMethod != null) {
+		if (updateHandler != null) {
 			try {
-				updateMethod.invoke(parent, state);
+				updateHandler.synesketchUpdate(state);
 			} catch (Exception e) {
 				e.printStackTrace();
-				updateMethod = null;
+				updateHandler = null;
 			}
 		}
 	}

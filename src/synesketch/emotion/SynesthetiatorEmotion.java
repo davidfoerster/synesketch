@@ -24,6 +24,8 @@ import java.util.List;
 
 import processing.core.PApplet;
 import synesketch.Synesthetiator;
+import synesketch.UpdateHandler;
+
 
 /**
  * Defines behavior for transfering textual affect information -- emotional
@@ -47,10 +49,23 @@ public class SynesthetiatorEmotion extends Synesthetiator {
 	 * @param parent
 	 * @throws Exception
 	 */
-	public SynesthetiatorEmotion(PApplet parent) throws Exception {
+	public SynesthetiatorEmotion(PApplet parent)
+    throws IOException, NoSuchMethodException, IllegalAccessException
+  {
 		super(parent);
-		empathyscope = Empathyscope.getInstance();
+    init();
 	}
+
+	public SynesthetiatorEmotion( UpdateHandler handler ) throws IOException
+  {
+		super(handler);
+		init();
+	}
+
+  private void init() throws IOException
+  {
+    empathyscope = Empathyscope.getInstance();
+  }
 
 	/**
 	 * Defines behaviour of transferring affective textual information into
