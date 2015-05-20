@@ -18,6 +18,7 @@
  */
 package synesketch.emotion;
 
+import java.util.Collections;
 import java.util.Comparator;
 
 
@@ -432,14 +433,22 @@ public class AffectWord {
 
 	public static class WeightSumComparator implements Comparator<AffectWord>
 	{
-		private static WeightSumComparator instance = null;
+		private static Comparator<AffectWord> instance = null,
+      reverseInstance = null;
 
-		public static WeightSumComparator getInstance()
+		public static Comparator<AffectWord> getInstance()
 		{
 			if (instance == null)
 				instance = new WeightSumComparator();
 			return instance;
 		}
+
+    public static Comparator<AffectWord> getReverseInstance()
+    {
+      if (reverseInstance == null)
+        reverseInstance = Collections.reverseOrder(getInstance());
+      return reverseInstance;
+    }
 
 		private WeightSumComparator() { }
 
