@@ -42,25 +42,13 @@ import java.util.Comparator;
  * @author Uros Krcadinac email: uros@krcadinac.com
  * @version 1.0
  */
-public class AffectWord {
-
+public class AffectWord implements Cloneable
+{
 	private String word;
 
-	private double generalWeight = 0.0;
+	private double generalWeight = 0.0, generalValence = 0.0;
 
-	private double generalValence = 0.0;
-
-	private double happinessWeight = 0.0;
-
-	private double sadnessWeight = 0.0;
-
-	private double angerWeight = 0.0;
-
-	private double fearWeight = 0.0;
-
-	private double disgustWeight = 0.0;
-
-	private double surpriseWeight = 0.0;
+	private double[] weights = new double[6];
 
 	private boolean startsWithEmoticon = false;
 
@@ -97,15 +85,16 @@ public class AffectWord {
 	 */
 	public AffectWord(String word, double generalWeight,
 			double happinessWeight, double sadnessWeight, double angerWeight,
-			double fearWeight, double disgustWeight, double surpriseWeight) {
+			double fearWeight, double disgustWeight, double surpriseWeight)
+  {
 		this.word = word;
 		this.generalWeight = generalWeight;
-		this.happinessWeight = happinessWeight;
-		this.sadnessWeight = sadnessWeight;
-		this.angerWeight = angerWeight;
-		this.fearWeight = fearWeight;
-		this.disgustWeight = disgustWeight;
-		this.surpriseWeight = surpriseWeight;
+    weights[Emotion.HAPPINESS] = happinessWeight;
+    weights[Emotion.SADNESS] = sadnessWeight;
+    weights[Emotion.ANGER] = angerWeight;
+    weights[Emotion.FEAR] = fearWeight;
+    weights[Emotion.DISGUST] = disgustWeight;
+    weights[Emotion.SURPRISE] = surpriseWeight;
 		this.generalValence = getValenceSum();
 	}
 
@@ -130,72 +119,66 @@ public class AffectWord {
 	 *            double representing the disgust weight
 	 * @param surpriseWeight
 	 *            double representing the surprise weight
-	 * @param quoficient
-	 *            double representing the quoficient for adjusting the weights
+	 * @param coefficient
+	 *            double representing the coefficient for adjusting the weights
 	 */
 	public AffectWord(String word, double generalWeight,
 			double happinessWeight, double sadnessWeight, double angerWeight,
 			double fearWeight, double disgustWeight, double surpriseWeight,
-			double quoficient) {
+			double coefficient)
+  {
 		this.word = word;
-		this.generalWeight = generalWeight * quoficient;
-		this.happinessWeight = happinessWeight * quoficient;
-		this.sadnessWeight = sadnessWeight * quoficient;
-		this.angerWeight = angerWeight * quoficient;
-		this.fearWeight = fearWeight * quoficient;
-		this.disgustWeight = disgustWeight * quoficient;
-		this.surpriseWeight = surpriseWeight * quoficient;
+		this.generalWeight = generalWeight * coefficient;
+    weights[Emotion.HAPPINESS] = happinessWeight * coefficient;
+    weights[Emotion.SADNESS] = sadnessWeight * coefficient;
+    weights[Emotion.ANGER] = angerWeight * coefficient;
+    weights[Emotion.FEAR] = fearWeight * coefficient;
+    weights[Emotion.DISGUST] = disgustWeight * coefficient;
+    weights[Emotion.SURPRISE] = surpriseWeight * coefficient;
 		this.generalValence = getValenceSum();
 	}
 
 	/**
-	 * Adjusts weights by the certain quoficient.
+	 * Adjusts weights by the certain coefficient.
 	 * 
-	 * @param quoficient
-	 *            double representing the quoficient for adjusting the weights
+	 * @param coefficient
+	 *            double representing the coefficient for adjusting the weights
 	 */
 
-	public void adjustWeights(double quoficient) {
-		this.generalWeight = generalWeight * quoficient;
-		this.happinessWeight = happinessWeight * quoficient;
-		this.sadnessWeight = sadnessWeight * quoficient;
-		this.angerWeight = angerWeight * quoficient;
-		this.fearWeight = fearWeight * quoficient;
-		this.disgustWeight = disgustWeight * quoficient;
-		this.surpriseWeight = surpriseWeight * quoficient;
+	public void adjustWeights(double coefficient)
+  {
+		generalWeight *= coefficient;
+    for (int i = 0; i < weights.length; i++)
+      weights[i] *= coefficient;
 		normalise();
 	}
 
-	private void normalise() {
+	private void normalise()
+  {
 		if (generalWeight > 1)
-			generalWeight = 1.0;
-		if (happinessWeight > 1)
-			happinessWeight = 1.0;
-		if (sadnessWeight > 1)
-			sadnessWeight = 1.0;
-		if (angerWeight > 1)
-			angerWeight = 1.0;
-		if (fearWeight > 1)
-			fearWeight = 1.0;
-		if (disgustWeight > 1)
-			disgustWeight = 1.0;
-		if (surpriseWeight > 1)
-			surpriseWeight = 1.0;
+			generalWeight = 1;
+    for (int i = 0; i < weights.length; i++) {
+      if (weights[i] > 1)
+        weights[i] = 1;
+    }
 	}
 
 	/**
 	 * Flips valence of the word -- calculates change from postive to negative
 	 * emotion.
 	 */
-	public void flipValence() {
+	public void flipValence()
+  {
 		generalValence = -generalValence;
-		double temp = happinessWeight;
-		happinessWeight = Math.max(Math.max(sadnessWeight, angerWeight), Math
-				.max(fearWeight, disgustWeight));
-		sadnessWeight = temp;
-		angerWeight = temp / 2;
-		fearWeight = temp / 2;
-		disgustWeight = temp / 2;
+		double temp = weights[Emotion.HAPPINESS];
+    weights[Emotion.HAPPINESS] = Math.max(
+      Math.max(weights[Emotion.SADNESS], weights[Emotion.ANGER]),
+      Math.max(weights[Emotion.FEAR], weights[Emotion.DISGUST]));
+    weights[Emotion.SADNESS] = temp;
+    temp /= 2;
+    weights[Emotion.ANGER] = temp;
+    weights[Emotion.FEAR] = temp;
+    weights[Emotion.DISGUST] = temp;
 	}
 
 	/**
@@ -204,12 +187,12 @@ public class AffectWord {
 	 * @return {@link AffectWord}, new duplicated object
 	 */
 	public AffectWord clone() {
-		AffectWord value = new AffectWord(word, generalWeight, happinessWeight,
-				sadnessWeight, angerWeight, fearWeight, disgustWeight,
-				surpriseWeight);
-		value.setStartsWithEmoticon(startsWithEmoticon);
-		return value;
-	}
+    try {
+      return (AffectWord) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new Error(e);
+    }
+  }
 
 	/**
 	 * Returns true if the word starts with the emoticon.
@@ -238,7 +221,7 @@ public class AffectWord {
 	 * @return double which represents the anger weight
 	 */
 	public double getAngerWeight() {
-		return angerWeight;
+		return weights[Emotion.ANGER];
 	}
 
 	/**
@@ -248,7 +231,7 @@ public class AffectWord {
 	 *            double which represents the anger weight
 	 */
 	public void setAngerWeight(double angerWeight) {
-		this.angerWeight = angerWeight;
+    weights[Emotion.ANGER] = angerWeight;
 	}
 
 	/**
@@ -257,7 +240,7 @@ public class AffectWord {
 	 * @return double which represents the disgust weight
 	 */
 	public double getDisgustWeight() {
-		return disgustWeight;
+		return weights[Emotion.DISGUST];
 	}
 
 	/**
@@ -267,7 +250,7 @@ public class AffectWord {
 	 *            double which represents the disgust weight
 	 */
 	public void setDisgustWeight(double disgustWeight) {
-		this.disgustWeight = disgustWeight;
+    weights[Emotion.DISGUST] = disgustWeight;
 	}
 
 	/**
@@ -276,7 +259,7 @@ public class AffectWord {
 	 * @return double which represents the fear weight
 	 */
 	public double getFearWeight() {
-		return fearWeight;
+		return weights[Emotion.FEAR];
 	}
 
 	/**
@@ -286,7 +269,7 @@ public class AffectWord {
 	 *            double which represents the fear weight
 	 */
 	public void setFearWeight(double fearWeight) {
-		this.fearWeight = fearWeight;
+    weights[Emotion.FEAR] = fearWeight;
 	}
 
 	/**
@@ -295,7 +278,7 @@ public class AffectWord {
 	 * @return double which represents the happiness weight
 	 */
 	public double getHappinessWeight() {
-		return happinessWeight;
+		return weights[Emotion.HAPPINESS];
 	}
 
 	/**
@@ -305,7 +288,7 @@ public class AffectWord {
 	 *            double which represents the happiness weight
 	 */
 	public void setHappinessWeight(double happinessWeight) {
-		this.happinessWeight = happinessWeight;
+    weights[Emotion.HAPPINESS] = happinessWeight;
 	}
 
 	/**
@@ -314,7 +297,7 @@ public class AffectWord {
 	 * @return double which represents the sadness weight
 	 */
 	public double getSadnessWeight() {
-		return sadnessWeight;
+		return weights[Emotion.SADNESS];
 	}
 
 	/**
@@ -324,7 +307,7 @@ public class AffectWord {
 	 *            double which represents the sadness weight
 	 */
 	public void setSadnessWeight(double sadnessWeight) {
-		this.sadnessWeight = sadnessWeight;
+    weights[Emotion.SADNESS] = sadnessWeight;
 	}
 
 	/**
@@ -333,7 +316,7 @@ public class AffectWord {
 	 * @return double which represents the surprise weight
 	 */
 	public double getSurpriseWeight() {
-		return surpriseWeight;
+		return weights[Emotion.SURPRISE];
 	}
 
 	/**
@@ -343,7 +326,7 @@ public class AffectWord {
 	 *            double which represents the surprise weight
 	 */
 	public void setSurpriseWeight(double surpriseWeight) {
-		this.surpriseWeight = surpriseWeight;
+    weights[Emotion.SURPRISE] = surpriseWeight;
 	}
 
 	/**
@@ -402,11 +385,7 @@ public class AffectWord {
 	 *         value of zero
 	 */
 	public boolean isZeroEkman() {
-		if (getWeightSum() == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return getWeightSum() == 0;
 	}
 
 	/**
@@ -414,20 +393,28 @@ public class AffectWord {
 	 * 
 	 * @return a string representation of the object
 	 */
-	public String toString() {
-		return word + " " + generalWeight + " " + happinessWeight + " "
-				+ sadnessWeight + " " + angerWeight + " " + fearWeight + " "
-				+ disgustWeight + " " + surpriseWeight;
+	public String toString()
+  {
+    StringBuilder sb = new StringBuilder(word + 7 * 6);
+    sb.append(word).append(' ').append(generalWeight);
+    for (double w: weights)
+      sb.append(' ').append(w);
+		return sb.toString();
 	}
 
-	private double getValenceSum() {
-		return happinessWeight - sadnessWeight - angerWeight - fearWeight
-				- disgustWeight;
+	private double getValenceSum()
+  {
+		return weights[Emotion.HAPPINESS] - (
+      (weights[Emotion.SADNESS] + weights[Emotion.ANGER]) +
+      (weights[Emotion.FEAR] + weights[Emotion.DISGUST]));
 	}
 
-	private double getWeightSum() {
-		return happinessWeight + sadnessWeight + angerWeight + fearWeight
-				+ disgustWeight + surpriseWeight;
+	private double getWeightSum()
+  {
+    double sum = 0;
+    for (double w: weights)
+      sum += w;
+    return sum;
 	}
 
 
