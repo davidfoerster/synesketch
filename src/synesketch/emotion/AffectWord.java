@@ -417,6 +417,14 @@ public class AffectWord implements Cloneable
     return sum;
 	}
 
+	private double getSquareWeightSum()
+  {
+    double sum = 0;
+    for (double w: weights)
+      sum += w * w;
+    return sum;
+	}
+
 
 	public static class WeightSumComparator implements Comparator<AffectWord>
 	{
@@ -445,4 +453,33 @@ public class AffectWord implements Cloneable
 			return Double.compare(o1.getWeightSum(), o2.getWeightSum());
 		}
 	}
+
+
+  public static class SquareWeightSumComparator implements Comparator<AffectWord>
+  {
+    private static Comparator<AffectWord> instance = null,
+      reverseInstance = null;
+
+    public static Comparator<AffectWord> getInstance()
+    {
+      if (instance == null)
+        instance = new WeightSumComparator();
+      return instance;
+    }
+
+    public static Comparator<AffectWord> getReverseInstance()
+    {
+      if (reverseInstance == null)
+        reverseInstance = Collections.reverseOrder(getInstance());
+      return reverseInstance;
+    }
+
+    private SquareWeightSumComparator() { }
+
+    @Override
+    public int compare( AffectWord o1, AffectWord o2 )
+    {
+      return Double.compare(o1.getSquareWeightSum(), o2.getSquareWeightSum());
+    }
+  }
 }
