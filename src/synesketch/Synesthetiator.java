@@ -54,22 +54,34 @@ public abstract class Synesthetiator
     public ReflectiveUpdateHandler( Object handler )
       throws NoSuchMethodException, IllegalAccessException
     {
-      this.handlerInstance = handler;
+      handlerInstance = handler;
       handlerMethod = handler.getClass().getMethod("synesketchUpdate", SynesketchState.class);
       int mod = handlerMethod.getModifiers();
-      if (!Modifier.isPublic(mod) || Modifier.isAbstract(mod)) {
+      if (!Modifier.isPublic(mod) || Modifier.isStatic(mod)) {
         throw new IllegalAccessException(
           handler.getClass().getName() + '#' + handlerMethod.getName() +
             '(' + handlerMethod.getParameterTypes()[0].getName() + ')' +
-            " must be public and non-abstract");
+            " must be public and non-static");
       }
     }
 
     @Override
-    public void synesketchUpdate( SynesketchState state )
-      throws InvocationTargetException, IllegalAccessException
+    public void synesketchUpdate( SynesketchState state ) throws Exception
     {
-      handlerMethod.invoke(handlerInstance, state);
+      try {
+        handlerMethod.invoke(handlerInstance, state);
+      } catch (IllegalAccessException ex) {
+        throw new Error(ex);
+      } catch (InvocationTargetException ex) {
+        Throwable cause = ex.getCause();
+        if (cause instanceof Exception) {
+          throw (Exception) cause;
+        } else if (cause instanceof Error) {
+          throw (Error) cause;
+        } else {
+          throw ex;
+        }
+      }
     }
   }
 
