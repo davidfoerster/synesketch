@@ -457,24 +457,11 @@ public class AffectWord implements Cloneable
 
   public static class SquareWeightSumComparator implements Comparator<AffectWord>
   {
-    private static Comparator<AffectWord> instance = null,
-      reverseInstance = null;
+    public static final Comparator<AffectWord>
+      INSTANCE = new WeightSumComparator(),
+      REVERSE_INSTANCE = Collections.reverseOrder(INSTANCE);
 
-    public static Comparator<AffectWord> getInstance()
-    {
-      if (instance == null)
-        instance = new WeightSumComparator();
-      return instance;
-    }
-
-    public static Comparator<AffectWord> getReverseInstance()
-    {
-      if (reverseInstance == null)
-        reverseInstance = Collections.reverseOrder(getInstance());
-      return reverseInstance;
-    }
-
-    private SquareWeightSumComparator() { }
+    protected SquareWeightSumComparator() { }
 
     @Override
     public int compare( AffectWord o1, AffectWord o2 )
