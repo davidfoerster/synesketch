@@ -116,7 +116,7 @@ public class Hooloovoo extends PApplet
 	public void printCurrentPalette () {
 		colorMode(RGB, 255);
 		for (int color: currentPalette) {
-			System.out.printf("(%d, %d, %d)\n", (int) red(color), (int) green(color), (int) blue(color));
+			System.out.format("(%d, %d, %d)%n", (int) red(color), (int) green(color), (int) blue(color));
 		}
 	}
 
