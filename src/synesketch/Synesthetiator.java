@@ -26,16 +26,18 @@ import java.lang.reflect.Modifier;
 import processing.core.PApplet;
 
 /**
- * Defines common behavior for transfering textual information into visual
- * output and notifying Processing applet (PApplet) about that new information.
+ * Defines common behavior for transferring textual information into visual
+ * output and notifying Processing applet ({@link PApplet}) about that new
+ * information.
  * <p>
  * For example, {@link synesketch.emotion.SynesthetiatorEmotion} is a subclass of this class, where
  * textual information refers to the new emotion recognised in text, which is to
- * be transfered into visual patterns.
+ * be transferred into visual patterns.
  * <p>
- * All subclasses of Synesthetiator should redefine the 'synesthetise' method
- * and implement the synesthesia alghoritm, the concrete way text is interpreted
- * and transfered into visual output.
+ * All subclasses of <code>Synesthetiator</code> should redefine the
+ * {@link #synesthetise(String)} method and implement the synesthesia
+ * algorithm, the concrete way text is interpreted and transferred into visual
+ * output.
  * 
  * @author Uros Krcadinac email: uros@krcadinac.com
  * @version 1.0
@@ -85,13 +87,18 @@ public abstract class Synesthetiator
     }
   }
 
+  public Synesthetiator()
+  {
+    this((UpdateHandler) null);
+  }
+
 	/**
-	 * Class constructor that sets parent Processing applet (PApplet). Parent
+	 * Class constructor that sets parent Processing applet ({@link PApplet}). Parent
 	 * applet is to be notified about some text event (for example, recognition
 	 * of a current emotion in text).
-	 * 
+	 *
 	 * @param parent
-	 *            PApllet, a parent Processing applet
+	 *            a parent Processing applet
 	 * @throws Exception
 	 */
 	public Synesthetiator(PApplet parent)
@@ -106,11 +113,11 @@ public abstract class Synesthetiator
 
 	/**
 	 * Notifies the parent Processing applet (PApplet) about some text event, by
-	 * calling applet's method 'synesketchUpdate'.
-	 * 
+	 * calling the applet’s method <code>synesketchUpdate</code>.
+	 *
 	 * @param state
 	 *            a SynesketchState object, which contains the data
-	 *            synestheticaly interpreted from the text
+	 *            synesthetically interpreted from the text
 	 */
 	public void notifyPApplet(SynesketchState state) {
 		if (updateHandler != null) {
@@ -125,13 +132,18 @@ public abstract class Synesthetiator
 
 	/**
 	 * Defines behaviour of transferring textual information into visual
-	 * information. In other words -- defines the synesthetic ablilites of the
+	 * information. In other words -- defines the synesthetic abilities of the
 	 * subclass.
 	 * 
-	 * @param text
-	 *            String containing the text which is to be analyzed
+	 * @param text  contains the text which is to be analyzed.
+   * @return  The result of the synesthetic analysis
 	 * @throws Exception
 	 */
-	public abstract void synesthetise(String text) throws Exception;
+	public abstract SynesketchState synesthetiseDirect( String text ) throws Exception;
+
+  public void synesthetise( String text ) throws Exception
+  {
+   notifyPApplet(synesthetiseDirect(text));
+  }
 
 }

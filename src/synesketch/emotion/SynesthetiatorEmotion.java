@@ -28,7 +28,7 @@ import synesketch.UpdateHandler;
 
 
 /**
- * Defines behavior for transfering textual affect information -- emotional
+ * Defines behavior for transferring textual affect information -- emotional
  * manifestations recognised in text -- into visual output and notifying
  * Processing applet ({@link PApplet}) about that new information.
  * 
@@ -39,7 +39,12 @@ public class SynesthetiatorEmotion extends Synesthetiator {
 
 	private List<EmotionalState> emotionalStates = new ArrayList<EmotionalState>();
 
-	private Empathyscope empathyscope;
+	private Empathyscope empathyscope = Empathyscope.getInstance();
+
+  public SynesthetiatorEmotion() throws IOException
+  {
+    super();
+  }
 
 	/**
 	 * Class constructor that sets parent Processing applet ({@link PApplet}).
@@ -53,37 +58,31 @@ public class SynesthetiatorEmotion extends Synesthetiator {
     throws IOException, NoSuchMethodException, IllegalAccessException
   {
 		super(parent);
-    init();
 	}
 
 	public SynesthetiatorEmotion( UpdateHandler handler ) throws IOException
   {
 		super(handler);
-		init();
 	}
-
-  private void init() throws IOException
-  {
-    empathyscope = Empathyscope.getInstance();
-  }
 
 	/**
 	 * Defines behaviour of transferring affective textual information into
-	 * visual information (defines the synesthetic ablilites).
+	 * visual information (defines the synesthetic abilities).
 	 * 
-	 * @param text
-	 *            {@link String} containing the text which is to be analyzed
-	 * @throws Exception
+	 * @param text  contains the text which is to be analyzed.
+   * @return  The result of the synesthetic analysis
+	 * @throws IOException
 	 */
 	@Override
-	public void synesthetise(String text) throws IOException {
+	public EmotionalState synesthetiseDirect( String text ) throws IOException
+	{
 		EmotionalState current = empathyscope.feel(text);
 		if (!emotionalStates.isEmpty())
 			current
 					.setPrevious(emotionalStates
 							.get(emotionalStates.size() - 1));
 		emotionalStates.add(current);
-		notifyPApplet(current);
+		return current;
 	}
 
 }
