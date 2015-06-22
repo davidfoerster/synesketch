@@ -18,9 +18,8 @@
  */
 package synesketch.emotion.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,20 +75,18 @@ public class LexicalUtility {
 	}
 
 	private void parseLexiconFile(List<AffectWord> wordList, String fileName)
-			throws IOException {
-		// URL fileURL = this.getClass().getResource(fileName);
-		// File file = new File(fileURL.getFile());
-		// BufferedReader in = new BufferedReader(new InputStreamReader(new
-		// FileInputStream(file), "UTF8"));
-		BufferedReader in = new BufferedReader(new InputStreamReader(this
-				.getClass().getResourceAsStream(fileName), "UTF8"));
-		String line = in.readLine();
-		while (line != null) {
-			AffectWord record = parseLine(line);
-			wordList.add(record);
-			line = in.readLine();
-		}
-		in.close();
+			throws IOException
+  {
+    InputStream in = this.getClass().getResourceAsStream(fileName);
+    if (in == null)
+      throw new FileNotFoundException(fileName);
+    try (BufferedReader reader =
+      new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
+    {
+      String line;
+      while ((line = reader.readLine()) != null)
+        wordList.add(parseLine(line));
+    }
 	}
 
 	/**
