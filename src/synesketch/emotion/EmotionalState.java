@@ -46,8 +46,8 @@ import synesketch.SynesketchState;
  * @version 1.0
  * 
  */
-public class EmotionalState extends SynesketchState {
-
+public class EmotionalState extends SynesketchState
+{
 	private double generalWeight = 0.0;
 
 	private int valence = 0;
@@ -58,12 +58,14 @@ public class EmotionalState extends SynesketchState {
 
 	private List<AffectWord> affectWords;
 
+
 	/**
 	 * Empty class constructor
 	 */
 	public EmotionalState() {
 		this("");
 	}
+
 
 	/**
 	 * Class constructor which sets the text.
@@ -76,6 +78,7 @@ public class EmotionalState extends SynesketchState {
 		emotions = new TreeSet<Emotion>();
 		emotions.add(new Emotion(1.0, Emotion.NEUTRAL));
 	}
+
 
 	/**
 	 * Class constuctor which sets the text, general emotional weight, emotional
@@ -101,6 +104,7 @@ public class EmotionalState extends SynesketchState {
 		this.affectWords = affectWords;
 	}
 
+
 	/**
 	 * Returns {@link Emotion} with the highest weight.
 	 * 
@@ -110,6 +114,7 @@ public class EmotionalState extends SynesketchState {
 	public Emotion getStrongestEmotion() {
 		return emotions.first();
 	}
+
 
 	/**
 	 * Returns several emotions ({@link Emotion} instances) with the highest
@@ -133,6 +138,7 @@ public class EmotionalState extends SynesketchState {
 		return value;
 	}
 
+
 	/**
 	 * Getter for the {@link Emotion} of happiness.
 	 * 
@@ -150,6 +156,7 @@ public class EmotionalState extends SynesketchState {
 	public double getHappinessWeight() {
 		return getHappiness().getWeight();
 	}
+
 
 	/**
 	 * Getter for the {@link Emotion} of sadness.
@@ -169,6 +176,7 @@ public class EmotionalState extends SynesketchState {
 		return getSadness().getWeight();
 	}
 
+
 	/**
 	 * Getter for the {@link Emotion} of fear.
 	 * 
@@ -186,6 +194,7 @@ public class EmotionalState extends SynesketchState {
 	public double getFearWeight() {
 		return getFear().getWeight();
 	}
+
 
 	/**
 	 * Getter for the {@link Emotion} of anger.
@@ -205,6 +214,7 @@ public class EmotionalState extends SynesketchState {
 		return getAnger().getWeight();
 	}
 
+
 	/**
 	 * Getter for the {@link Emotion} of disgust.
 	 * 
@@ -223,6 +233,7 @@ public class EmotionalState extends SynesketchState {
 		return getDisgust().getWeight();
 	}
 
+
 	/**
 	 * Getter for the {@link Emotion} of surprise
 	 * 
@@ -240,6 +251,7 @@ public class EmotionalState extends SynesketchState {
 	public double getSurpriseWeight() {
 		return getSurprise().getWeight();
 	}
+
 
 	/**
 	 * Getter for the previous {@link EmotionalState}
@@ -260,6 +272,7 @@ public class EmotionalState extends SynesketchState {
 		this.previous = previous;
 	}
 
+
 	/**
 	 * Getter for the emotional valence
 	 * 
@@ -268,6 +281,7 @@ public class EmotionalState extends SynesketchState {
 	public int getValence() {
 		return valence;
 	}
+
 
 	/**
 	 * Getter for the general emotional weight
@@ -278,6 +292,7 @@ public class EmotionalState extends SynesketchState {
 		return generalWeight;
 	}
 
+
 	public Emotion getEmotion(int type)
 	{
 		for (Emotion e: emotions) {
@@ -287,10 +302,12 @@ public class EmotionalState extends SynesketchState {
 		return new Emotion(0, type);
 	}
 
+
 	public List<AffectWord> getAffectWords()
 	{
 		return affectWords;
 	}
+
 
 	/**
 	 * Transforms emotional data into a descriptional sentence ('toString'
@@ -298,14 +315,13 @@ public class EmotionalState extends SynesketchState {
 	 * 
 	 * @return String description of a emotinal data
 	 */
-	public String toString() {
-		return "Text: " + text + "\nGeneral weight: " + generalWeight
-				+ "\nValence: " + valence + "\nHappiness weight: "
-				+ getHappinessWeight() + "\nSadness weight: "
-				+ getSadnessWeight() + "\nAnger weight: " + getAngerWeight()
-				+ "\nFear weight: " + getFearWeight() + "\nDisgust weight: "
-				+ getDisgustWeight() + "\nSurprise weight: "
-				+ getSurpriseWeight() + "\n";
+	public String toString()
+	{
+    return String.format(
+      "Text: %s%nGeneral weight: %f%nValence: %d%nHappiness weight: %f%nSadness weight: %f%nAnger weight: %f%nFear weight: %f%nDisgust weight: %f%nSurprise weight: %f%n",
+      getText(), getGeneralWeight(), getValence(),
+      getHappinessWeight(), getSadnessWeight(), getAngerWeight(),
+      getFearWeight(), getDisgustWeight(), getSurpriseWeight());
 	}
 
 }
