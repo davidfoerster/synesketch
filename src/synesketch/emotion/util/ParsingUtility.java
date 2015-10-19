@@ -22,6 +22,8 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
+
 
 /**
  * Utility class for some text parsing alghoritms
@@ -92,6 +94,11 @@ public class ParsingUtility {
 	public static List<String> splitWords(String text, String splitter) {
 		return Arrays.asList(text.split(splitter));
 	}
+
+	public static List<String> splitWords(String text, Pattern splitter) {
+		return Arrays.asList(splitter.split(text));
+	}
+
 
 	/**
 	 * Returns true if the fist word begins with the second.

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.regex.Pattern;
+
 
 /**
  * A class for handling XML property files.  
@@ -57,7 +59,11 @@ public class PropertiesManager {
 	public int getIntProperty(String key) {
 		return Integer.parseInt(props.getProperty(key));
 	}
-	
+
+
+	public static final Pattern COMMA_SPLIT_PATTERN =
+    Pattern.compile("\\s*,\\s*");
+
 	/**
 	 * Property getter for array of ints properties.
 	 * 
@@ -66,7 +72,7 @@ public class PropertiesManager {
 	 */
 	public int[] getIntArrayProperty(String key) {
 		String line = props.getProperty(key);
-		String[] strings = line.split(", ");
+		String[] strings = COMMA_SPLIT_PATTERN.split(line);
 		int[] value = new int[strings.length];
 		for (int i = 0; i < value.length; i++) {
 			value[i] = Integer.parseInt(strings[i], 16);

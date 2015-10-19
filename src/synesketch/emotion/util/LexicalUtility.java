@@ -26,6 +26,9 @@ import java.util.List;
 import synesketch.emotion.AffectWord;
 import synesketch.util.PropertiesManager;
 
+import static synesketch.util.PropertiesManager.COMMA_SPLIT_PATTERN;
+
+
 /**
  * Utility class for some text processing alghoritms
  * 
@@ -49,14 +52,15 @@ public class LexicalUtility {
 
 	private double normalisator = 0.75;
 
+
 	private LexicalUtility() throws IOException {
 		affectWords = new ArrayList<AffectWord>();
 		emoticons = new ArrayList<AffectWord>();
 		PropertiesManager pm = new PropertiesManager(fileNameProperties);
 		negations = ParsingUtility
-				.splitWords(pm.getProperty("negations"), ", ");
+				.splitWords(pm.getProperty("negations"), COMMA_SPLIT_PATTERN);
 		intensityModifiers = ParsingUtility.splitWords(pm
-				.getProperty("intensity.modifiers"), ", ");
+				.getProperty("intensity.modifiers"), COMMA_SPLIT_PATTERN);
 		parseLexiconFile(affectWords, fileNameLexicon);
 		parseLexiconFile(emoticons, fileNameEmoticons);
 	}

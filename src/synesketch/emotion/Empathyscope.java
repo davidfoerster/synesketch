@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import synesketch.emotion.util.HeuristicsUtility;
 import synesketch.emotion.util.LexicalUtility;
@@ -57,6 +58,9 @@ public class Empathyscope {
 		return instance;
 	}
 
+
+	private static final Pattern WORD_SPLITTER = Pattern.compile("\\s+");
+
 	/**
 	 * Textual affect sensing behavior, the main NLP algorithm which uses
 	 * Synesketch Lexicon and several heuristic rules.
@@ -88,7 +92,7 @@ public class Empathyscope {
 					.computeExclaminationQoef(sentence.toLowerCase());
 
 			List<String> splittedWords = ParsingUtility.splitWords(sentence,
-					" ");
+        WORD_SPLITTER);
 			String previousWord = "";
 			for (String splittedWord : splittedWords) {
 
