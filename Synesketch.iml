@@ -14,8 +14,8 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="gluegen2-rt" level="application" />
-    <orderEntry type="library" name="jogl2" level="application" />
+    <orderEntry type="library" scope="RUNTIME" name="gluegen2-rt" level="application" />
+    <orderEntry type="library" scope="RUNTIME" name="jogl2" level="application" />
     <orderEntry type="library" name="Processing 3.0a" level="application" />
   </component>
 </module>
