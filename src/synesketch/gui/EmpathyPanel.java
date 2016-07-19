@@ -39,17 +39,17 @@ import synesketch.Synesthetiator;
  */
 public class EmpathyPanel extends JPanel {
 
-	private Synesthetiator synesthetiator;
+	private final Synesthetiator synesthetiator;
 
 	private static final long serialVersionUID = 1L;
 
-	private PApplet embed;
+	private final PApplet embed;
 
-	private String appletClassNamePrefix = "synesketch.art.sketch.";
+	private static final String appletClassNamePrefix = "synesketch.art.sketch.";
 
 	/**
 	 * Class contructor that creates a Processing applet and embeds it.
-	 * 
+	 *
 	 * @param appletSize
 	 *            dimensions of the Processing applet (applet is square)
 	 * @param artType
@@ -84,7 +84,7 @@ public class EmpathyPanel extends JPanel {
 	/**
 	 * Notifies the Synesthetiator about the new text. It should be called from
 	 * the GUI.
-	 * 
+	 *
 	 * @param text
 	 *            String which represents the text to be analysed
 	 * @throws Exception
@@ -96,7 +96,7 @@ public class EmpathyPanel extends JPanel {
 	/**
 	 * Getter for the embeded Processing Applet, so it can be accessed from the
 	 * GUI.
-	 * 
+	 *
 	 * @return embeded Processing applet
 	 */
 	public PApplet getProcessingApplet() {
