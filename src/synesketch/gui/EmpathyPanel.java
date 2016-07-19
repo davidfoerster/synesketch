@@ -64,21 +64,27 @@ public class EmpathyPanel extends JPanel {
 	 * @throws Exception
 	 */
 	public EmpathyPanel(int appletSize, String artType,
-			String synesthetiatorType) throws Exception {
+			String synesthetiatorType) throws Exception
+	{
+		String appletClassName = appletClassNamePrefix + artType;
+
 		@SuppressWarnings("unchecked")
-		Class appletDefinition = Class.forName(appletClassNamePrefix + artType);
-		@SuppressWarnings("unchecked")
-		Constructor appletConstructor = appletDefinition
+		Class<? extends PApplet> appletDefinition =
+			(Class<? extends PApplet>) Class.forName(appletClassName);
+		Constructor<? extends PApplet> appletConstructor = appletDefinition
 				.getConstructor(int.class);
-		embed = (PApplet) appletConstructor.newInstance(appletSize);
+		embed = appletConstructor.newInstance(appletSize);
+
 		@SuppressWarnings("unchecked")
-		Class syneDefinition = Class.forName(synesthetiatorType);
-		@SuppressWarnings("unchecked")
-		Constructor syneConstructor = syneDefinition
+		Class<? extends Synesthetiator> syneDefinition =
+			(Class<? extends Synesthetiator>) Class.forName(synesthetiatorType);
+		Constructor<? extends Synesthetiator> syneConstructor = syneDefinition
 				.getConstructor(PApplet.class);
-		synesthetiator = (Synesthetiator) syneConstructor.newInstance(embed);
-		add(embed, BorderLayout.CENTER);
-		embed.init();
+		synesthetiator = syneConstructor.newInstance(embed);
+
+		PApplet.runSketch(new String[]{ appletClassName }, embed);
+
+		//add(embed, BorderLayout.CENTER);
 	}
 
 	/**

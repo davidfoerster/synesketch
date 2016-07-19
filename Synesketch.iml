@@ -16,6 +16,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="library" scope="RUNTIME" name="gluegen2-rt" level="application" />
     <orderEntry type="library" scope="RUNTIME" name="jogl2" level="application" />
-    <orderEntry type="library" name="Processing 3.0a" level="application" />
+    <orderEntry type="library" name="Processing 3.1" level="application" />
   </component>
 </module>
