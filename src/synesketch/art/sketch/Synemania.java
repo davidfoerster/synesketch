@@ -78,9 +78,15 @@ public class Synemania extends PApplet
 
 
 	@Override
-	public void setup()
+	public void settings()
 	{
 		size(dim, dim, P3D);
+	}
+
+
+	@Override
+	public void setup()
+	{
 		background(255);
 		noStroke();
 

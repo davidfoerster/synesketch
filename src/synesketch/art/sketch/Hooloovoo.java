@@ -58,13 +58,19 @@ public class Hooloovoo extends PApplet
 
 
 	@Override
+	public void settings()
+	{
+		size(dim, dim);
+		//smooth();
+	}
+
+
+	@Override
 	public void setup()
 	{
 		colorMode(HSB, 1.0f);
-		size(dim, dim);
 		noStroke();
 		//noLoop();
-		//smooth();
 		currentPalette = bwPalette;
 	}
 
