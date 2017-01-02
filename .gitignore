@@ -1,5 +1,6 @@
 /doc/
 /bin/
+/target/
 *.class
 
 ### Packages
