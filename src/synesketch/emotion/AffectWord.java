@@ -20,6 +20,7 @@ package synesketch.emotion;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.stream.DoubleStream;
 
 
 /**
@@ -424,6 +425,12 @@ public class AffectWord implements Cloneable
       sum += w * w;
     return sum;
 	}
+
+
+  public DoubleStream getWeights()
+  {
+    return DoubleStream.of(weights);
+  }
 
 
 	public static class WeightSumComparator implements Comparator<AffectWord>
