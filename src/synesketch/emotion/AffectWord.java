@@ -18,8 +18,6 @@
  */
 package synesketch.emotion;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.stream.DoubleStream;
 
 
@@ -430,50 +428,5 @@ public class AffectWord implements Cloneable
   public DoubleStream getWeights()
   {
     return DoubleStream.of(weights);
-  }
-
-
-	public static class WeightSumComparator implements Comparator<AffectWord>
-	{
-		private static Comparator<AffectWord> instance = null,
-      reverseInstance = null;
-
-		public static Comparator<AffectWord> getInstance()
-		{
-			if (instance == null)
-				instance = new WeightSumComparator();
-			return instance;
-		}
-
-    public static Comparator<AffectWord> getReverseInstance()
-    {
-      if (reverseInstance == null)
-        reverseInstance = Collections.reverseOrder(getInstance());
-      return reverseInstance;
-    }
-
-		private WeightSumComparator() { }
-
-		@Override
-		public int compare( AffectWord o1, AffectWord o2 )
-		{
-			return Double.compare(o1.getWeightSum(), o2.getWeightSum());
-		}
-	}
-
-
-  public static class SquareWeightSumComparator implements Comparator<AffectWord>
-  {
-    public static final Comparator<AffectWord>
-      INSTANCE = new WeightSumComparator(),
-      REVERSE_INSTANCE = Collections.reverseOrder(INSTANCE);
-
-    protected SquareWeightSumComparator() { }
-
-    @Override
-    public int compare( AffectWord o1, AffectWord o2 )
-    {
-      return Double.compare(o1.getSquareWeightSum(), o2.getSquareWeightSum());
-    }
   }
 }
