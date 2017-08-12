@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -75,7 +75,7 @@ public class EmotionalState extends SynesketchState
 	 */
 	public EmotionalState(String text) {
 		super(text);
-		emotions = new TreeSet<Emotion>();
+		emotions = new TreeSet<>();
 		emotions.add(new Emotion(1.0, Emotion.NEUTRAL));
 	}
 
@@ -127,7 +127,7 @@ public class EmotionalState extends SynesketchState
 	 *         weight
 	 */
 	public List<Emotion> getFirstStrongestEmotions(int stop) {
-		List<Emotion> value = new ArrayList<Emotion>(Math.min(emotions.size(), stop));
+		List<Emotion> value = new ArrayList<>(Math.min(emotions.size(), stop));
 		for (Emotion e : emotions) {
 			if (stop <= 0) {
 				break;
@@ -258,6 +258,7 @@ public class EmotionalState extends SynesketchState
 	 * 
 	 * @return previous {@link EmotionalState}
 	 */
+	@SuppressWarnings("UnnecessaryJavaDocLink")
 	public EmotionalState getPrevious() {
 		return previous;
 	}
@@ -268,6 +269,7 @@ public class EmotionalState extends SynesketchState
 	 * @param previous
 	 *            previous {@link EmotionalState}
 	 */
+	@SuppressWarnings("UnnecessaryJavaDocLink")
 	public void setPrevious(EmotionalState previous) {
 		this.previous = previous;
 	}
@@ -310,11 +312,11 @@ public class EmotionalState extends SynesketchState
 
 
 	/**
-	 * Transforms emotional data into a descriptional sentence ('toString'
-	 * method)
+	 * Transforms emotional data into a descriptive sentence
 	 * 
-	 * @return String description of a emotinal data
+	 * @return String description of a emotional data
 	 */
+	@Override
 	public String toString()
 	{
     return String.format(

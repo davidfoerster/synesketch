@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -55,6 +55,7 @@ public class SynesketchPalette {
 
 	private final Random randomiser = new Random();
 
+	@SuppressWarnings("PublicStaticArrayField")
 	public static final int[] neutralColors = {
 		0x606060, 0x909090, 0x9b9b9b, 0x585858, 0x8f8f8f, 0x696969, 0xa5a5a5,
 		0x5f5f5f, 0x7f7f7f, 0x828282, 0x9e9e9e, 0x828282, 0x797979, 0x5c5c5c,
@@ -65,7 +66,7 @@ public class SynesketchPalette {
 	};
 
 	/**
-	 * Class contructor which sets six palettes -- one for each emotion type,
+	 * Class constructor which sets six palettes -- one for each emotion type,
 	 * happiness, sadness, anger, fear, disgust, and surprise -- by taking data
 	 * from a XML file defined by palette's name.
 	 *

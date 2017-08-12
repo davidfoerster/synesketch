@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -26,29 +26,33 @@ import java.util.regex.Pattern;
 
 
 /**
- * Utility class for some text parsing alghoritms
+ * Utility class for some text parsing algorithms
  * 
  * @author Uros Krcadinac email: uros@krcadinac.com
  * @version 1.0
  */
-public class ParsingUtility {
+public final class ParsingUtility
+{
+	private ParsingUtility() { }
+
 
 	/**
 	 * Pareses text into sentences.
 	 * 
 	 * @param text
 	 *            {@link String} which represents the text
-	 * @return {@link ArrayList} of {@link String} instances representing the
-	 *         sentences
+	 * @return List of {@link String} instances representing the sentences
 	 */
-	public static ArrayList<String> parseSentences(String text) {
-		ArrayList<String> value = new ArrayList<String>();
+	public static List<String> parseSentences(String text)
+	{
+		List<String> value = new ArrayList<>();
 
 		BreakIterator boundary = BreakIterator.getSentenceInstance();
 		boundary.setText(text);
 		int start = boundary.first();
-		for (int end = boundary.next(); end != BreakIterator.DONE; start = end, end = boundary
-				.next()) {
+		for (int end = boundary.next(); end != BreakIterator.DONE;
+			start = end, end = boundary.next())
+		{
 			String word = text.substring(start, end);
 			value.add(word);
 		}
@@ -60,21 +64,20 @@ public class ParsingUtility {
 	 * 
 	 * @param text
 	 *            {@link String} which represents the sentence
-	 * @return {@link ArrayList} of {@link String} instances representing the
-	 *         words
+	 * @return List of {@link String} instances representing the words
 	 */
-	public static ArrayList<String> parseWords(String text) {
-		ArrayList<String> value = new ArrayList<String>();
+	public static List<String> parseWords(String text)
+	{
+		List<String> value = new ArrayList<>();
 
 		BreakIterator boundary = BreakIterator.getWordInstance();
 		boundary.setText(text);
 		int start = boundary.first();
-		for (int end = boundary.next(); end != BreakIterator.DONE; start = end, end = boundary
-				.next()) {
+		for (int end = boundary.next(); end != BreakIterator.DONE;
+			start = end, end = boundary.next())
+		{
 			String word = text.substring(start, end);
-			// if (Character.isLetter(word.charAt(0))) {
 			value.add(word);
-			// }
 		}
 		return value;
 	}
@@ -88,7 +91,7 @@ public class ParsingUtility {
 	 * @param splitter
 	 *            {@link String} which represents the splitting mark (' ' or
 	 *            '-', to name two examples)
-	 * @return {@link List} of {@link String} instances representing the splited
+	 * @return {@link List} of {@link String} instances representing the split
 	 *         words
 	 */
 	public static List<String> splitWords(String text, String splitter) {

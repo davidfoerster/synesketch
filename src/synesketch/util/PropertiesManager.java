@@ -25,7 +25,6 @@ public class PropertiesManager {
 	 * 
 	 * @param fileName	name of the XML property file
 	 */
-	
 	public PropertiesManager(String fileName) {
 		props = new Properties();
 		//URL fileURL = this.getClass().getResource(fileName); 
@@ -106,8 +105,8 @@ public class PropertiesManager {
 	 * @param key	property name
 	 * @param value	property value
 	 */
-	public void put(Object key, Object value) {
-		props.put(key, String.valueOf(value));
+	public void put(String key, Object value) {
+		props.setProperty(key, String.valueOf(value));
 	}
 	
 	/**

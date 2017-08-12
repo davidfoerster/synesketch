@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -183,8 +183,9 @@ public class AffectWord implements Cloneable
 	/**
 	 * Makes duplicate of the object.
 	 * 
-	 * @return {@link AffectWord}, new duplicated object
+	 * @return new duplicated object
 	 */
+	@Override
 	public AffectWord clone() {
     try {
       return (AffectWord) super.clone();
@@ -392,6 +393,7 @@ public class AffectWord implements Cloneable
 	 * 
 	 * @return a string representation of the object
 	 */
+	@Override
 	public String toString()
   {
     StringBuilder sb = new StringBuilder(word + 7 * 6);

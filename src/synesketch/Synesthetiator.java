@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -34,7 +34,7 @@ import processing.core.PApplet;
  * textual information refers to the new emotion recognised in text, which is to
  * be transferred into visual patterns.
  * <p>
- * All subclasses of <code>Synesthetiator</code> should redefine the
+ * All subclasses of {@code Synesthetiator} should redefine the
  * {@link #synesthetise(String)} method and implement the synesthesia
  * algorithm, the concrete way text is interpreted and transferred into visual
  * output.
@@ -76,18 +76,16 @@ public abstract class Synesthetiator
         throw new Error(ex);
       } catch (InvocationTargetException ex) {
         Throwable cause = ex.getCause();
-        if (cause instanceof Exception) {
+        if (cause instanceof Exception)
           throw (Exception) cause;
-        } else if (cause instanceof Error) {
+	      if (cause instanceof Error)
           throw (Error) cause;
-        } else {
-          throw ex;
-        }
+	      throw ex;
       }
     }
   }
 
-  public Synesthetiator()
+  protected Synesthetiator()
   {
     this((UpdateHandler) null);
   }
@@ -99,21 +97,20 @@ public abstract class Synesthetiator
 	 *
 	 * @param parent
 	 *            a parent Processing applet
-	 * @throws Exception
 	 */
-	public Synesthetiator(PApplet parent)
+	protected Synesthetiator( PApplet parent )
     throws NoSuchMethodException, IllegalAccessException
   {
 		this((parent != null) ? new ReflectiveUpdateHandler(parent) : null);
 	}
 
-	public Synesthetiator(UpdateHandler handler) {
+	protected Synesthetiator( UpdateHandler handler ) {
 		this.updateHandler = handler;
 	}
 
 	/**
 	 * Notifies the parent Processing applet (PApplet) about some text event, by
-	 * calling the applet’s method <code>synesketchUpdate</code>.
+	 * calling the applet’s method {@code synesketchUpdate}.
 	 *
 	 * @param state
 	 *            a SynesketchState object, which contains the data
@@ -137,7 +134,6 @@ public abstract class Synesthetiator
 	 * 
 	 * @param text  contains the text which is to be analyzed.
    * @return  The result of the synesthetic analysis
-	 * @throws Exception
 	 */
 	public abstract SynesketchState synesthetiseDirect( String text ) throws Exception;
 

@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -27,9 +27,6 @@ import synesketch.emotion.EmotionalState;
 
 public class Hooloovoo extends PApplet
 {
-
-	private static final long serialVersionUID = 1L;
-
 	SynesketchPalette palette = new SynesketchPalette("standard");
 
 	int[] currentPalette;

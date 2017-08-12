@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch
  * Copyright (C) 2008  Uros Krcadinac
  *

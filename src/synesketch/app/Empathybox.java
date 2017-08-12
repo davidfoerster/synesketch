@@ -1,25 +1,20 @@
-/**
- * @author Uros Krcadinac
- * 17.03.2008.
- * @version 0.1
- */
 package synesketch.app;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 import synesketch.gui.EmpathyPanel;
 
 
+/**
+ * @author Uros Krcadinac
+ * 17.03.2008.
+ * @version 0.1
+ */
 public class Empathybox
 {
 
@@ -33,6 +28,7 @@ public class Empathybox
 
 	private JTextArea jTextArea = null;
 
+	@SuppressWarnings("FieldMayBeStatic")
 	private final int dim = 500;
 
   private final String artType;
@@ -49,7 +45,7 @@ public class Empathybox
 	{
 		if (jFrame == null) {
 			jFrame = new JFrame();
-			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			jFrame.setSize(dim, (int) Math.round(dim * 1.618));
 			jFrame.setLocation(400, 100);
 			FlowLayout flowLayout = new FlowLayout();

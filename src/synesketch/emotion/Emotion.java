@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -72,8 +72,7 @@ public class Emotion implements Comparable<Emotion> {
 	/**
 	 * Compares weights of current object and the one from the argument.
 	 * 
-	 * @param arg0
-	 *            {@link Emotion} which is to compared to the current one
+	 * @param arg0   which is to compared to the current one
 	 * @return integer representing the result
 	 */
 	public int compareTo(Emotion arg0) {
@@ -132,6 +131,7 @@ public class Emotion implements Comparable<Emotion> {
 	 * 
 	 * @return a string representation of the object
 	 */
+	@Override
 	public String toString() {
 		return "Type: " + getTypeName() + ", weight: " + weight;
 	}

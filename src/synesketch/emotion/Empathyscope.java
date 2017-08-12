@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -35,9 +35,9 @@ import synesketch.emotion.util.ParsingUtility;
  * @author Uros Krcadinac email: uros@krcadinac.com
  * @version 1.0
  */
-public class Empathyscope {
-
-	private static Empathyscope instance;
+public final class Empathyscope
+{
+	private static Empathyscope instance = null;
 
 	private LexicalUtility lexUtil;
 
@@ -46,10 +46,7 @@ public class Empathyscope {
 	}
 
 	/**
-	 * Returns the Singleton instance of the {@link Empathyscope}.
-	 * 
-	 * @return {@link Empathyscope} instance
-	 * @throws IOException
+	 * @return singleton instance
 	 */
 	public static Empathyscope getInstance() throws IOException {
 		if (instance == null) {
@@ -69,67 +66,67 @@ public class Empathyscope {
 	 *            String representing the text to be analysed
 	 * @return {@link EmotionalState} which represents data recognised from the
 	 *         text
-	 * @throws IOException
 	 */
 	public EmotionalState feel(String text) throws IOException {
 
+		//noinspection HardcodedLineSeparator
 		text = text.replace('\n', ' ');
-		List<AffectWord> affectWords = new ArrayList<AffectWord>();
+		List<AffectWord> affectWords = new ArrayList<>();
 		List<String> sentences = ParsingUtility.parseSentences(text);
 
 		for (String sentence : sentences) {
 
-			// we imploy 5 heuristic rules to adjust emotive weights of the
+			// we employ 5 heuristic rules to adjust emotive weights of the
 			// words:
 			// (1) negation in a sentence => flip valence of the affect words in
 			// it
 			boolean hasNegation = HeuristicsUtility.hasNegation(sentence
 					.toLowerCase());
 
-			// (2) more exclamination signs in a sentence => more intensive
+			// (2) more exclamation signs in a sentence => more intensive
 			// emotive weights
-			double exclaminationQoef = HeuristicsUtility
+			double exclamationCoeff = HeuristicsUtility
 					.computeExclaminationQoef(sentence.toLowerCase());
 
-			List<String> splittedWords = ParsingUtility.splitWords(sentence,
+			List<String> splitWords = ParsingUtility.splitWords(sentence,
         WORD_SPLITTER);
 			String previousWord = "";
-			for (String splittedWord : splittedWords) {
+			for (String splitWord : splitWords) {
 
 				AffectWord emoWord = lexUtil
-						.getEmoticonAffectWord(splittedWord);
+						.getEmoticonAffectWord(splitWord);
 
 				if (emoWord != null) {
 
 					// (3) more emoticons with more 'emotive' signs (e.g. :DDDD)
 					// => more intensive emotive weights
-					double emoticonCoef = HeuristicsUtility
-							.computeEmoticonCoef(splittedWord, emoWord);
-					emoWord.adjustWeights(exclaminationQoef * emoticonCoef);
+					double emoticonCoeff = HeuristicsUtility
+							.computeEmoticonCoef(splitWord, emoWord);
+					emoWord.adjustWeights(exclamationCoeff * emoticonCoeff);
 					affectWords.add(emoWord);
 				} else {
 
 					List<String> words = ParsingUtility
-							.parseWords(splittedWord);
+							.parseWords(splitWord);
 					for (String word : words) {
 						emoWord = lexUtil.getAffectWord(word.toLowerCase());
 						if (emoWord != null) {
 
 							// (4) word is upper case => more intensive emotive
 							// weights
-							double capsLockCoef = HeuristicsUtility
+							double capsLockCoeff = HeuristicsUtility
 									.computeCapsLockQoef(word);
 
 							// (5) previous word is a intensity modifier (e.g.
 							// "extremely") => more intensive emotive weights
-							double modifierCoef = HeuristicsUtility
+							double modifierCoeff = HeuristicsUtility
 									.computeModifier(previousWord);
 
 							// change the affect word!
 							if (hasNegation)
 								emoWord.flipValence();
-							emoWord.adjustWeights(exclaminationQoef
-									* capsLockCoef * modifierCoef);
+							emoWord.adjustWeights(exclamationCoeff
+									* capsLockCoeff * modifierCoeff);
 
 							affectWords.add(emoWord);
 						}
@@ -141,9 +138,10 @@ public class Empathyscope {
 		return createEmotionalState(text, affectWords);
 	}
 
-	private EmotionalState createEmotionalState(String text,
-			List<AffectWord> affectWords) {
-		TreeSet<Emotion> emotions = new TreeSet<Emotion>();
+	private static EmotionalState createEmotionalState( String text,
+		List<AffectWord> affectWords )
+	{
+		TreeSet<Emotion> emotions = new TreeSet<>();
 		int generalValence = 0;
 		double valence, generalWeight, happinessWeight, sadnessWeight, angerWeight, fearWeight, disgustWeight, surpriseWeight;
 		// valence = generalWeight = happinessWeight = sadnessWeight =

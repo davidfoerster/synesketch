@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -30,18 +30,18 @@ import static synesketch.util.PropertiesManager.COMMA_SPLIT_PATTERN;
 
 
 /**
- * Utility class for some text processing alghoritms
+ * Utility class for some text processing algorithms
  * 
  * @author Uros Krcadinac email: uros@krcadinac.com
  * @version 1.0
  */
-public class LexicalUtility {
+public final class LexicalUtility
+{
+	private static LexicalUtility instance = null;
 
-	private static LexicalUtility instance;
-
-	private String fileNameLexicon = "/data/lex/synesketch_lexicon.txt";
-	private String fileNameEmoticons = "/data/lex/synesketch_lexicon_emoticons.txt";
-	private String fileNameProperties = "/data/lex/keywords.xml";
+	private static final String fileNameLexicon = "/data/lex/synesketch_lexicon.txt";
+	private static final String fileNameEmoticons = "/data/lex/synesketch_lexicon_emoticons.txt";
+	private static final String fileNameProperties = "/data/lex/keywords.xml";
 
 	private List<AffectWord> affectWords;
 	private List<AffectWord> emoticons;
@@ -50,12 +50,12 @@ public class LexicalUtility {
 
 	private List<String> intensityModifiers;
 
-	private double normalisator = 0.75;
+	private static final double normalizer = 0.75;
 
 
 	private LexicalUtility() throws IOException {
-		affectWords = new ArrayList<AffectWord>();
-		emoticons = new ArrayList<AffectWord>();
+		affectWords = new ArrayList<>();
+		emoticons = new ArrayList<>();
 		PropertiesManager pm = new PropertiesManager(fileNameProperties);
 		negations = ParsingUtility
 				.splitWords(pm.getProperty("negations"), COMMA_SPLIT_PATTERN);
@@ -66,10 +66,7 @@ public class LexicalUtility {
 	}
 
 	/**
-	 * Returns the Singleton instance of the {@link LexicalUtility}.
-	 * 
-	 * @return the instance of {@link LexicalUtility}
-	 * @throws IOException
+	 * @return the singleton instance
 	 */
 	public static LexicalUtility getInstance() throws IOException {
 		if (instance == null) {
@@ -81,6 +78,7 @@ public class LexicalUtility {
 	private void parseLexiconFile(List<AffectWord> wordList, String fileName)
 			throws IOException
   {
+    @SuppressWarnings({ "resource", "IOResourceOpenedButNotSafelyClosed" })
     InputStream in = this.getClass().getResourceAsStream(fileName);
     if (in == null)
       throw new FileNotFoundException(fileName);
@@ -101,7 +99,8 @@ public class LexicalUtility {
 	 *            {@link String} representing the line of the Synesketch Lexicon
 	 * @return {@link AffectWord}
 	 */
-	private AffectWord parseLine(String line) {
+	private static AffectWord parseLine( String line )
+	{
 		AffectWord value;
 		String[] text = line.split(" ");
 		String word = text[0];
@@ -114,7 +113,7 @@ public class LexicalUtility {
 		double surpriseWeight = Double.parseDouble(text[7]);
 		value = new AffectWord(word, generalWeight, happinessWeight,
 				sadnessWeight, angerWeight, fearWeight, disgustWeight,
-				surpriseWeight, normalisator);
+				surpriseWeight, normalizer);
 		return value;
 	}
 
@@ -142,15 +141,18 @@ public class LexicalUtility {
 	 *            {@link String} representing the word
 	 * @return {@link AffectWord}
 	 */
-	public AffectWord getEmoticonAffectWord(String word) {
-		for (AffectWord affectWordEmoticon : emoticons) {
-			if (affectWordEmoticon.getWord().equals(word)) {
+	public AffectWord getEmoticonAffectWord(String word)
+	{
+		for (AffectWord affectWordEmoticon : emoticons)
+		{
+			if (affectWordEmoticon.getWord().equals(word))
 				return affectWordEmoticon.clone();
-			}
 		}
-		for (AffectWord affectWordEmoticon : emoticons) {
+		for (AffectWord affectWordEmoticon : emoticons)
+		{
 			String emoticon = affectWordEmoticon.getWord();
-			if (ParsingUtility.containsFirst(word, emoticon)) {
+			if (word.startsWith(emoticon))
+			{
 				affectWordEmoticon.setStartsWithEmoticon(true);
 				return affectWordEmoticon.clone();
 			}
@@ -167,7 +169,7 @@ public class LexicalUtility {
 	 * @return the list of {@link AffectWord} instances
 	 */
 	public List<AffectWord> getEmoticonWords(String sentence) {
-		List<AffectWord> value = new ArrayList<AffectWord>();
+		List<AffectWord> value = new ArrayList<>();
 		for (AffectWord emoticon : emoticons) {
 			String emoticonWord = emoticon.getWord();
 			if (sentence.contains(emoticonWord)) {

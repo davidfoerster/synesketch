@@ -1,4 +1,4 @@
-/**
+/*
  * Synesketch 
  * Copyright (C) 2008  Uros Krcadinac
  *
@@ -18,21 +18,18 @@
  */
 package synesketch.gui;
 
-import java.awt.*;
 import java.lang.reflect.Constructor;
-
 import javax.swing.*;
-
 import processing.core.PApplet;
-
 import synesketch.Synesthetiator;
+
 
 /**
  * A Swing component, subclass of a JPanel, which embeds the Processing apllet
  * (PApplet). EmpathyPanel can be used to add Synesketch to a GUI application.
  * <p>
  * It can work for different Processing visualizing artwork, and for different
- * synesthetic alghoritms.
+ * synesthetic algorithms.
  * 
  * @author Uros Krcadinac email: uros@krcadinac.com
  * @version 1.0
@@ -48,21 +45,21 @@ public class EmpathyPanel extends JPanel {
 	private static final String appletClassNamePrefix = "synesketch.art.sketch.";
 
 	/**
-	 * Class contructor that creates a Processing applet and embeds it.
+	 * Class constructor that creates a Processing applet and embeds it.
 	 *
 	 * @param appletSize
 	 *            dimensions of the Processing applet (applet is square)
 	 * @param artType
 	 *            name od the visualization type, Processing artwork; in other
 	 *            words, name of the PApplet class representing the
-	 *            visualizaton, which is located in synesketch.art.sketch
+	 *            visualization, which is located in synesketch.art.sketch
 	 *            package
 	 * @param synesthetiatorType
 	 *            name of the synesthetiator type; in other words, name of the
 	 *            subclass of the Synesthetiator which defines the synesthetic
 	 *            behavior.
-	 * @throws Exception
 	 */
+	@SuppressWarnings("JavaReflectionMemberAccess")
 	public EmpathyPanel(int appletSize, String artType,
 			String synesthetiatorType) throws Exception
 	{
@@ -93,7 +90,6 @@ public class EmpathyPanel extends JPanel {
 	 *
 	 * @param text
 	 *            String which represents the text to be analysed
-	 * @throws Exception
 	 */
 	public void fireSynesthesiator(String text) throws Exception {
 		synesthetiator.synesthetise(text);
