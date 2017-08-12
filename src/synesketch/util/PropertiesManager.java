@@ -1,8 +1,5 @@
 package synesketch.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -17,9 +14,8 @@ import java.util.regex.Pattern;
 public class PropertiesManager {
 	
 	private Properties props;
-	
-	private File file;
-	
+
+
 	/**
 	 * Class constructor that loads properties from XML file.
 	 * 
@@ -108,19 +104,5 @@ public class PropertiesManager {
 	public void put(String key, Object value) {
 		props.setProperty(key, String.valueOf(value));
 	}
-	
-	/**
-	 * Stores propeties to XML propety file. 
-	 */
-	public void save(){
-		try {
-			props.storeToXML(new FileOutputStream(file), null);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-	}
-
 }
  

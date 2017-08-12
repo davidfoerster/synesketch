@@ -101,28 +101,4 @@ public final class ParsingUtility
 	public static List<String> splitWords(String text, Pattern splitter) {
 		return Arrays.asList(splitter.split(text));
 	}
-
-
-	/**
-	 * Returns true if the fist word begins with the second.
-	 * 
-	 * @param container
-	 *            {@link String} which represents the container word
-	 * @param containee
-	 *            {@link String} which represents the containee word
-	 * @return boolean, true if the fist word begins with the second
-	 */
-	public static boolean containsFirst(String container, String containee) {
-		if (container.length() > containee.length()) {
-			for (int i = 0; i < containee.length(); i++) {
-				if (!(containee.charAt(i) == container.charAt(i))) {
-					return false;
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 }
