@@ -75,13 +75,14 @@ public class Emotion implements Comparable<Emotion> {
 	 * @param arg0   which is to compared to the current one
 	 * @return integer representing the result
 	 */
-	public int compareTo(Emotion arg0) {
-		int value = (int) (100 * (arg0.getWeight() - weight));
-		// make sure each emotion will be considered, even if it is weight-even
-		// with another one
-		if (value == 0)
-			return 1;
-		return value;
+	@SuppressWarnings("SubtractionInCompareTo")
+	@Override
+	public int compareTo(Emotion arg0)
+	{
+		return
+			Math.abs(this.weight - arg0.weight) < 1e-2 ?
+				0 :
+				Double.compare(this.weight, arg0.weight);
 	}
 
 	/**
